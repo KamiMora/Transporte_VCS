@@ -1,5 +1,7 @@
 import java.util.GregorianCalendar;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Viaje
 {
@@ -8,7 +10,7 @@ public class Viaje
     private GregorianCalendar horaSalida;
     private GregorianCalendar horaLlegada;
     private Bus bus;
-    private Pasajero[] pasajeros;
+    private List<Pasajero> listaPasajeros;
     private int cantPasajeros;
     private int contPasajeros;
     
@@ -23,8 +25,7 @@ public class Viaje
         this.destino = destino;
         this.horaSalida = horaSalida;
         this.horaLlegada = horaLlegada;
-        this.cantPasajeros = cantPasajeros;
-        pasajeros = new Pasajero[this.cantPasajeros];
+        listaPasajeros = new ArrayList<Pasajero>();
         this.contPasajeros = 0;
     }
     
@@ -77,17 +78,7 @@ public class Viaje
     {
         this.bus = bus;
     }
-
-    public Pasajero[] getPasajeros()
-    {
-        return this.pasajeros;
-    }
-
-    public void setPasajeros(Pasajero[] pasajeros)
-    {
-        this.pasajeros = pasajeros;
-    }
-    
+       
     public int getCantPasajeros()
     {
         return this.cantPasajeros;
@@ -95,8 +86,7 @@ public class Viaje
     
     public void anadirPasajero(Pasajero p)
     {
-        this.pasajeros[contPasajeros] = p;
-        this.contPasajeros++;
+        this.listaPasajeros.add(p);
     }
     
     public void setPasajeros(int cantPasajeros)
@@ -107,9 +97,26 @@ public class Viaje
     public String presentarPasajeros()
     {
         String listado = "";
-        for (int i = 0; i<this.contPasajeros; i++)
+        int i = 0;
+        for (Pasajero pas: listaPasajeros)
         {
-            listado = listado + "Pasajero #"+(i+1) + "\n" + this.pasajeros[i].toString() + "\n";
+            listado = listado + "Pasajero #"+(i+1) + "\n" + pas.toString() + "\n";
+            i++;
+        }
+        return listado;
+    }
+    
+    public String buscarPasajeros(String criterio)
+    {
+        String listado = "";
+        int i = 0;
+        for (Pasajero pas: listaPasajeros)
+        {
+            if (pas.getNombre().equals(criterio) || pas.getApellido().equals(criterio) || (pas.getNumDocumento()+"").equals(criterio))
+            {
+                listado = listado + "Pasajero #" + (i+1) + "\n" + pas.toString() + "\n";
+            }
+            i++;
         }
         return listado;
     }
